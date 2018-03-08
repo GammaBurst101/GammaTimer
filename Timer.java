@@ -1,7 +1,9 @@
 import javax.swing.*;
 import java.awt.FlowLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-class Timer
+class Timer implements ActionListener
 {
     //Declarations
     private JFrame frame;
@@ -9,6 +11,7 @@ class Timer
     private JButton setButton, stopButton;
     private JTextField inputHr, inputMin, inputSec;
     private JLabel inputMsg;
+    private String time = "";
     
     Timer()
     {
@@ -33,6 +36,9 @@ class Timer
         inputMin.setSize(2, 4);
         inputSec.setSize(2, 4);
         
+        //Registering ActionListener
+        setButton.addActionListener(this);
+        
         //Adding to panels
         ctrl.add(setButton);
         ctrl.add(stopButton);
@@ -48,5 +54,11 @@ class Timer
         //Adding to frame
         frame.add(input);
         frame.add(ctrl);
+    }
+    
+    @Override
+    public void actionPerformed(ActionEvent e)
+    {
+        time = inputHr.getText()+":"+inputMin.getText()+":"+inputSec.getText();
     }
 }
