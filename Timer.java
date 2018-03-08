@@ -38,6 +38,14 @@ class Timer implements ActionListener
         
         //Registering ActionListener
         setButton.addActionListener(this);
+        stopButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                time = "";
+            }
+        }
+        );
         
         //Adding to panels
         ctrl.add(setButton);
