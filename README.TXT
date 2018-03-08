@@ -3,9 +3,9 @@
 
     This desktop app is developed by me to learn how to develop GUI in Java using the Swing package.
 
-    There will be a link here after this timer is developed.
+    There will be a link here to download it after development.
     
-    The following is simple details regarding this application.
+    The following are simple details regarding this application:
 
 PROJECT TITLE: GammaTimer
 PURPOSE OF PROJECT: To develop a timer for computers.
