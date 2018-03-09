@@ -7,9 +7,9 @@ class Timer implements ActionListener
 {
     //Declarations
     private JFrame frame;
-    private JPanel ctrl, input;
+    private JPanel ctrl, input, timer;
     private JButton setButton, stopButton;
-    private JTextField inputHr, inputMin, inputSec;
+    private JTextField inputHr, inputMin, inputSec, display;
     private JLabel inputMsg;
     private String time = "";
     
@@ -19,11 +19,13 @@ class Timer implements ActionListener
         frame = new JFrame("GammaTimer");
         ctrl = new JPanel();
         input = new JPanel();
+        timer = new JPanel();
         setButton = new JButton("Set Timer");
         stopButton = new JButton("Stop Timer");
         inputHr = new JTextField("Hr");
         inputMin = new JTextField("Min");
         inputSec = new JTextField("Sec");
+        display = new JTextField(400);
         inputMsg = new JLabel("Enter the time here");
         
         //Setting up
@@ -35,6 +37,7 @@ class Timer implements ActionListener
         inputHr.setSize(2, 4);
         inputMin.setSize(2, 4);
         inputSec.setSize(2, 4);
+        display.setEditable(false);
         
         //Registering ActionListener
         setButton.addActionListener(this);
@@ -48,6 +51,7 @@ class Timer implements ActionListener
         );
         
         //Adding to panels
+        timer.add(display);
         ctrl.add(setButton);
         ctrl.add(stopButton);
         input.add(inputMsg);
@@ -56,10 +60,12 @@ class Timer implements ActionListener
         input.add(inputSec);
         
         //panel config
+        timer.setBounds(10, 10, 410, 60);
         input.setBounds(10, 10, 200, 200);
         ctrl.setBounds(300, 20, 300, 50);
         
         //Adding to frame
+        frame.add(timer);
         frame.add(input);
         frame.add(ctrl);
     }
