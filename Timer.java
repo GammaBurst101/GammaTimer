@@ -41,14 +41,7 @@ class Timer implements ActionListener
         
         //Registering ActionListener
         setButton.addActionListener(this);
-        stopButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                time = "";
-            }
-        }
-        );
+        stopButton.addActionListener(this);
         
         //Adding to frame
         frame.add(display);
@@ -63,6 +56,9 @@ class Timer implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        time = inputHr.getText()+":"+inputMin.getText()+":"+inputSec.getText();
+        if (e.getSource()==setButton)
+            time = inputHr.getText()+":"+inputMin.getText()+":"+inputSec.getText();
+        else if (e.getSource()==stopButton)
+            time = "";
     }
 }
