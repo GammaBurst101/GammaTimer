@@ -3,7 +3,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-class Timer implements ActionListener
+class GammaTimer implements ActionListener
 {
     //Declarations
     private JFrame frame;
@@ -11,8 +11,9 @@ class Timer implements ActionListener
     private JTextField inputHr, inputMin, inputSec, display;
     private JLabel inputMsg;
     private String time = "";
+    private Timer t;
     
-    Timer()
+    GammaTimer()
     {
         //Initialisations
         frame = new JFrame("GammaTimer");
@@ -21,7 +22,7 @@ class Timer implements ActionListener
         inputHr = new JTextField("Hr");
         inputMin = new JTextField("Min");
         inputSec = new JTextField("Sec");
-        display = new JTextField(100);
+        display = new JTextField();
         inputMsg = new JLabel("Enter the time here");
         
         //Setting up
@@ -51,14 +52,45 @@ class Timer implements ActionListener
         frame.add(inputSec);
         frame.add(setButton);
         frame.add(stopButton);
+        
+        //Timer
+        t = new Timer(1000, this);
     }
     
     @Override
     public void actionPerformed(ActionEvent e)
     {
         if (e.getSource()==setButton)
+        {
             time = inputHr.getText()+":"+inputMin.getText()+":"+inputSec.getText();
+            display.setText(time);
+            t.start();
+        }
         else if (e.getSource()==stopButton)
-            time = "";
+            t.stop();
+        else if (e.getSource()==t)
+        {
+            String currentTime = display.getText();
+            int hr = Integer.valueOf(currentTime.substring(0, currentTime.indexOf(":")));
+            int min = Integer.valueOf(currentTime.substring(currentTime.indexOf(":") + 1, currentTime.lastIndexOf(":")));
+            int sec = Integer.valueOf(currentTime.substring(currentTime.lastIndexOf(":")+1));
+            
+            //Decreasing the current time display
+            if (sec != 0)
+                sec --;
+            else if (min != 0)
+            {
+                min --;
+                sec = 59;
+            }
+            else 
+            {
+                hr--;
+                min = sec = 59;
+            }
+            
+            //setting time
+            display.setText(hr+":"+min+":"+sec);
+        }
     }
 }
