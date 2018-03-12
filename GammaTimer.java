@@ -69,11 +69,14 @@ class GammaTimer implements ActionListener
         else if (e.getSource()==stopButton)
             t.stop();
         else if (e.getSource()==t)
-        {
+        {   
             String currentTime = display.getText();
             int hr = Integer.valueOf(currentTime.substring(0, currentTime.indexOf(":")));
             int min = Integer.valueOf(currentTime.substring(currentTime.indexOf(":") + 1, currentTime.lastIndexOf(":")));
             int sec = Integer.valueOf(currentTime.substring(currentTime.lastIndexOf(":")+1));
+            
+            if ((hr + min + sec) == 0)
+                t.stop();
             
             //Decreasing the current time display
             if (sec != 0)
