@@ -75,8 +75,11 @@ class GammaTimer implements ActionListener
             int min = Integer.valueOf(currentTime.substring(currentTime.indexOf(":") + 1, currentTime.lastIndexOf(":")));
             int sec = Integer.valueOf(currentTime.substring(currentTime.lastIndexOf(":")+1));
             
-            if ((hr + min + sec) == 0)
+            if (currentTime.equals("0:0:0"))
+            {
                 t.stop();
+                display.setText("Time's Up!");
+            }
             
             //Decreasing the current time display
             if (sec != 0)
