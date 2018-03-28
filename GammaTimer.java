@@ -27,6 +27,7 @@ class GammaTimer implements ActionListener
         
         //Setting up
         frame.setVisible(true);
+        frame.setResizable(false);
         frame.setSize(450, 450);
         frame.setLayout(null);
         display.setEditable(false);
