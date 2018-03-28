@@ -28,12 +28,12 @@ class GammaTimer implements ActionListener
         //Setting up
         frame.setVisible(true);
         frame.setResizable(false);
-        frame.setSize(450, 450);
+        frame.setSize(400, 300);
         frame.setLayout(null);
         display.setEditable(false);
         
         //Using setBounds()
-        display.setBounds(10, 10, 400, 100);
+        display.setBounds(10, 10, 370, 100);
         inputMsg.setBounds (10, 100, 400, 50);
         inputHr.setBounds (40, 150, 50, 15);
         inputMin.setBounds (100, 150, 50, 15);
