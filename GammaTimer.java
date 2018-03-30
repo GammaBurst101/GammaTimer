@@ -30,6 +30,7 @@ class GammaTimer implements ActionListener
         frame.setResizable(false);
         frame.setSize(400, 300);
         frame.setLayout(null);
+        frame.setLocationRelativeTo(null);
         display.setEditable(false);
         inputMsg.setFont(new Font("Arial", Font.PLAIN, 20));
         
