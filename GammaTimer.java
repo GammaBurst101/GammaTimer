@@ -15,49 +15,7 @@ class GammaTimer implements ActionListener
     
     GammaTimer()
     {
-        //Initialisations
-        frame = new JFrame("GammaTimer");
-        setButton = new JButton("Set Timer");
-        stopButton = new JButton("Stop Timer");
-        inputHr = new JTextField("Hr");
-        inputMin = new JTextField("Min");
-        inputSec = new JTextField("Sec");
-        display = new JTextField();
-        inputMsg = new JLabel("Enter the time here:");
-        
-        //Setting up
-        frame.setVisible(true);
-        frame.setResizable(false);
-        frame.setSize(400, 300);
-        frame.setLayout(null);
-        frame.setLocationRelativeTo(null);
-        display.setEditable(false);
-        inputMsg.setFont(new Font("Arial", Font.PLAIN, 20));
-        
-        //Using setBounds()
-        display.setBounds(10, 10, 370, 100);
-        inputMsg.setBounds (10, 100, 400, 50);
-        inputHr.setBounds (100, 150, 40, 30);
-        inputMin.setBounds (150, 150, 40, 30);
-        inputSec.setBounds (200, 150, 40, 30);
-        setButton.setBounds (75, 200, 100, 30);
-        stopButton.setBounds (220, 200, 100, 30);
-        
-        //Registering ActionListener
-        setButton.addActionListener(this);
-        stopButton.addActionListener(this);
-        
-        //Adding to frame
-        frame.add(display);
-        frame.add(inputMsg);
-        frame.add(inputHr);
-        frame.add(inputMin);
-        frame.add(inputSec);
-        frame.add(setButton);
-        frame.add(stopButton);
-        
-        //Timer
-        t = new Timer(1000, this);
+        init();
     }
     
     @Override
@@ -101,5 +59,52 @@ class GammaTimer implements ActionListener
             //setting time
             display.setText(hr+":"+min+":"+sec);
         }
+    }
+    
+    private void init()
+    {
+        //Initialisations
+        frame = new JFrame("GammaTimer");
+        setButton = new JButton("Set Timer");
+        stopButton = new JButton("Stop Timer");
+        inputHr = new JTextField("Hr");
+        inputMin = new JTextField("Min");
+        inputSec = new JTextField("Sec");
+        display = new JTextField();
+        inputMsg = new JLabel("Enter the time here:");
+        
+        //Setting up
+        frame.setVisible(true);
+        frame.setResizable(false);
+        frame.setSize(400, 300);
+        frame.setLayout(null);
+        frame.setLocationRelativeTo(null);
+        display.setEditable(false);
+        inputMsg.setFont(new Font("Arial", Font.PLAIN, 20));
+        
+        //Using setBounds()
+        display.setBounds(10, 10, 370, 100);
+        inputMsg.setBounds (10, 100, 400, 50);
+        inputHr.setBounds (100, 150, 40, 30);
+        inputMin.setBounds (150, 150, 40, 30);
+        inputSec.setBounds (200, 150, 40, 30);
+        setButton.setBounds (75, 200, 100, 30);
+        stopButton.setBounds (220, 200, 100, 30);
+        
+        //Registering ActionListener
+        setButton.addActionListener(this);
+        stopButton.addActionListener(this);
+        
+        //Adding to frame
+        frame.add(display);
+        frame.add(inputMsg);
+        frame.add(inputHr);
+        frame.add(inputMin);
+        frame.add(inputSec);
+        frame.add(setButton);
+        frame.add(stopButton);
+        
+        //Timer
+        t = new Timer(1000, this);
     }
 }
