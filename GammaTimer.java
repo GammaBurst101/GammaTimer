@@ -85,6 +85,10 @@ class GammaTimer implements ActionListener
         
         inputMsg.setFont(new Font("Arial", Font.PLAIN, 20));
         
+        inputHr.setFont(new Font("Comic Sans", Font.PLAIN, 20));
+        inputMin.setFont(new Font("Comic Sans", Font.PLAIN, 20));
+        inputSec.setFont(new Font("Comic Sans", Font.PLAIN, 20));
+        
         //Using setBounds()
         display.setBounds(10, 10, 370, 100);
         inputMsg.setBounds (10, 100, 400, 50);
