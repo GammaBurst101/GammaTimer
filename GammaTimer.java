@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import javax.sound.sampled.*;
 
 class GammaTimer implements ActionListener
 {
@@ -12,6 +14,8 @@ class GammaTimer implements ActionListener
     private JLabel inputMsg;
     private String time = "";
     private Timer t;
+    private boolean alarmRinging = false;
+    private Clip clip;
     
     GammaTimer()
     {
@@ -28,7 +32,16 @@ class GammaTimer implements ActionListener
             t.start();
         }
         else if (e.getSource()==stopButton)
-            t.stop();
+        {   
+            if (alarmRinging == false)
+                t.stop();
+            else
+            {
+                clip.stop();
+                alarmRinging = false;
+                stopButton.setText("Stop Timer");
+            }
+        }
         else if (e.getSource()==t)
         {   
             String currentTime = display.getText();
@@ -39,7 +52,7 @@ class GammaTimer implements ActionListener
             if (currentTime.equals("0:0:1"))
             {
                 t.stop();
-                display.setText("Time's Up!");
+                ringAlarm();
             }
             
             //Decreasing the current time display
@@ -113,5 +126,20 @@ class GammaTimer implements ActionListener
         
         //Timer
         t = new Timer(1000, this);
+    }
+    
+    private void ringAlarm()
+    {
+        try{
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("sounds\\alarm.wav").getAbsoluteFile());
+            clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+            alarmRinging = true;
+            stopButton.setText("Stop Alarm");
+        }catch(Exception e) {
+            System.out.println ("Error with playing sound.");
+            e.printStackTrace();
+        }
     }
 }
