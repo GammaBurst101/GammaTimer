@@ -87,6 +87,7 @@ class GammaTimer implements ActionListener
         inputMsg = new JLabel("Enter the time here:");
         
         //Setting up
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
         frame.setResizable(false);
         frame.setSize(400, 300);
