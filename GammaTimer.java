@@ -67,6 +67,7 @@ class GammaTimer implements ActionListener
             {
                 hr--;
                 min = sec = 59;
+                display.setFont(new Font("Arial", Font.PLAIN, 100));
             }
             
             //setting time
@@ -96,6 +97,7 @@ class GammaTimer implements ActionListener
         
         display.setEditable(false);
         display.setFont(new Font("Arial", Font.PLAIN, 125));
+        display.setHorizontalAlignment(SwingConstants.CENTER);
         
         inputMsg.setFont(new Font("Arial", Font.PLAIN, 20));
         
