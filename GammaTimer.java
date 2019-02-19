@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import javax.sound.sampled.*;
 
-class GammaTimer implements ActionListener
+class GammaTimer
 {
     //Declarations
     private JFrame frame;
@@ -20,59 +20,6 @@ class GammaTimer implements ActionListener
     GammaTimer()
     {
         init();
-    }
-    
-    @Override
-    public void actionPerformed(ActionEvent e)
-    {
-        if (e.getSource()==setButton)
-        {
-            time = inputHr.getText()+":"+inputMin.getText()+":"+inputSec.getText();
-            display.setText(time);
-            t.start();
-        }
-        else if (e.getSource()==stopButton)
-        {   
-            if (alarmRinging == false)
-                t.stop();
-            else
-            {
-                clip.stop();
-                alarmRinging = false;
-                stopButton.setText("Stop Timer");
-            }
-        }
-        else if (e.getSource()==t)
-        {   
-            String currentTime = display.getText();
-            int hr = Integer.valueOf(currentTime.substring(0, currentTime.indexOf(":")));
-            int min = Integer.valueOf(currentTime.substring(currentTime.indexOf(":") + 1, currentTime.lastIndexOf(":")));
-            int sec = Integer.valueOf(currentTime.substring(currentTime.lastIndexOf(":")+1));
-            
-            if (currentTime.equals("0:0:1"))
-            {
-                t.stop();
-                ringAlarm();
-            }
-            
-            //Decreasing the current time display
-            if (sec != 0)
-                sec --;
-            else if (min != 0)
-            {
-                min --;
-                sec = 59;
-            }
-            else 
-            {
-                hr--;
-                min = sec = 59;
-                display.setFont(new Font("Arial", Font.PLAIN, 100));
-            }
-            
-            //setting time
-            display.setText(hr+":"+min+":"+sec);
-        }
     }
     
     private void init()
@@ -115,8 +62,8 @@ class GammaTimer implements ActionListener
         stopButton.setBounds (220, 200, 100, 30);
         
         //Registering ActionListener
-        setButton.addActionListener(this);
-        stopButton.addActionListener(this);
+        setButton.addActionListener(new SetButtonListener());
+        stopButton.addActionListener(new StopButtonListener());
         
         //Adding to frame
         frame.add(display);
@@ -128,7 +75,7 @@ class GammaTimer implements ActionListener
         frame.add(stopButton);
         
         //Timer
-        t = new Timer(1000, this);
+        t = new Timer(1000, new TimerListener());
     }
     
     private void ringAlarm()
@@ -143,6 +90,61 @@ class GammaTimer implements ActionListener
         }catch(Exception e) {
             System.out.println ("Error with playing sound.");
             e.printStackTrace();
+        }
+    }
+    
+    //Inner classes for event handling
+    class SetButtonListener implements ActionListener {
+        public void actionPerformed (ActionEvent e) {
+            time = inputHr.getText()+":"+inputMin.getText()+":"+inputSec.getText();
+            display.setText(time);
+            t.start();
+        }
+    }
+    
+    class StopButtonListener implements ActionListener {
+        public void actionPerformed (ActionEvent e) {
+            if (alarmRinging == false)
+                t.stop();
+            else
+            {
+                clip.stop();
+                alarmRinging = false;
+                stopButton.setText("Stop Timer");
+            }
+        }
+    }
+    
+    class TimerListener implements ActionListener {
+        public void actionPerformed (ActionEvent e) {
+            String currentTime = display.getText();
+            int hr = Integer.valueOf(currentTime.substring(0, currentTime.indexOf(":")));
+            int min = Integer.valueOf(currentTime.substring(currentTime.indexOf(":") + 1, currentTime.lastIndexOf(":")));
+            int sec = Integer.valueOf(currentTime.substring(currentTime.lastIndexOf(":")+1));
+            
+            if (currentTime.equals("0:0:1"))
+            {
+                t.stop();
+                ringAlarm();
+            }
+            
+            //Decreasing the current time display
+            if (sec != 0)
+                sec --;
+            else if (min != 0)
+            {
+                min --;
+                sec = 59;
+            }
+            else 
+            {
+                hr--;
+                min = sec = 59;
+                display.setFont(new Font("Arial", Font.PLAIN, 100));
+            }
+            
+            //setting time
+            display.setText(hr+":"+min+":"+sec);
         }
     }
 }
