@@ -16,12 +16,12 @@ class GammaTimer
     private Timer t;
     private boolean alarmRinging = false;
     private Clip clip;
-    
+
     GammaTimer()
     {
         init();
     }
-    
+
     private void init()
     {
         //Initialisations
@@ -33,7 +33,7 @@ class GammaTimer
         inputSec = new JTextField("Sec");
         display = new JTextField();
         inputMsg = new JLabel("Enter the time here:");
-        
+
         //Setting up
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
@@ -41,17 +41,17 @@ class GammaTimer
         frame.setSize(400, 300);
         frame.setLayout(null);
         frame.setLocationRelativeTo(null);
-        
+
         display.setEditable(false);
         display.setFont(new Font("Arial", Font.PLAIN, 125));
         display.setHorizontalAlignment(SwingConstants.CENTER);
-        
+
         inputMsg.setFont(new Font("Arial", Font.PLAIN, 20));
-        
+
         inputHr.setFont(new Font("Comic Sans", Font.PLAIN, 20));
         inputMin.setFont(new Font("Comic Sans", Font.PLAIN, 20));
         inputSec.setFont(new Font("Comic Sans", Font.PLAIN, 20));
-        
+
         //Using setBounds()
         display.setBounds(10, 10, 370, 100);
         inputMsg.setBounds (10, 100, 400, 50);
@@ -60,11 +60,11 @@ class GammaTimer
         inputSec.setBounds (200, 150, 40, 30);
         setButton.setBounds (75, 200, 100, 30);
         stopButton.setBounds (220, 200, 100, 30);
-        
+
         //Registering ActionListener
         setButton.addActionListener(new SetButtonListener());
         stopButton.addActionListener(new StopButtonListener());
-        
+
         //Adding to frame
         frame.add(display);
         frame.add(inputMsg);
@@ -73,11 +73,11 @@ class GammaTimer
         frame.add(inputSec);
         frame.add(setButton);
         frame.add(stopButton);
-        
+
         //Timer
         t = new Timer(1000, new TimerListener());
     }
-    
+
     private void ringAlarm()
     {
         try{
@@ -92,16 +92,31 @@ class GammaTimer
             e.printStackTrace();
         }
     }
-    
+
     //Inner classes for event handling
     class SetButtonListener implements ActionListener {
         public void actionPerformed (ActionEvent e) {
             time = inputHr.getText()+":"+inputMin.getText()+":"+inputSec.getText();
-            display.setText(time);
-            t.start();
+
+            if ( checkValidity(time) ) {
+                display.setText(time);
+                t.start();
+            }
+        }
+        
+        //The input time has to be greater than 0:0:0 otherwise there is no meaning in running the timer 
+        boolean checkValidity (String time) {
+            int hr = Integer.valueOf(time.substring(0, time.indexOf(":")));
+            int min = Integer.valueOf(time.substring(time.indexOf(":") + 1, time.lastIndexOf(":")));
+            int sec = Integer.valueOf(time.substring(time.lastIndexOf(":")+1));
+            
+            if (hr > 0 && min > 0 && sec > 0)
+                return true;
+            else
+                return false;
         }
     }
-    
+
     class StopButtonListener implements ActionListener {
         public void actionPerformed (ActionEvent e) {
             if (alarmRinging == false)
@@ -114,20 +129,20 @@ class GammaTimer
             }
         }
     }
-    
+
     class TimerListener implements ActionListener {
         public void actionPerformed (ActionEvent e) {
             String currentTime = display.getText();
             int hr = Integer.valueOf(currentTime.substring(0, currentTime.indexOf(":")));
             int min = Integer.valueOf(currentTime.substring(currentTime.indexOf(":") + 1, currentTime.lastIndexOf(":")));
             int sec = Integer.valueOf(currentTime.substring(currentTime.lastIndexOf(":")+1));
-            
+
             if (currentTime.equals("0:0:1"))
             {
                 t.stop();
                 ringAlarm();
             }
-            
+
             //Decreasing the current time display
             if (sec != 0)
                 sec --;
@@ -142,7 +157,7 @@ class GammaTimer
                 min = sec = 59;
                 display.setFont(new Font("Arial", Font.PLAIN, 100));
             }
-            
+
             //setting time
             display.setText(hr+":"+min+":"+sec);
         }
