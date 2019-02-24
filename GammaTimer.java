@@ -103,18 +103,22 @@ class GammaTimer
                 t.start();
             }
         }
-        
+
         //The input time has to be greater than 0:0:0 otherwise there is no meaning in running the timer 
         boolean checkValidity (String time) {
-            int hr = Integer.valueOf(time.substring(0, time.indexOf(":")));
-            int min = Integer.valueOf(time.substring(time.indexOf(":") + 1, time.lastIndexOf(":")));
-            int sec = Integer.valueOf(time.substring(time.lastIndexOf(":")+1));
-            
-            if (hr <0 || min < 0 || sec < 0) return false;
-            if (hr == 0 && min == 0 && sec == 0) return false;
-            
-            //If the time passes the above checks then it's valid
-            return true;
+            try {
+                int hr = Integer.valueOf(time.substring(0, time.indexOf(":")));
+                int min = Integer.valueOf(time.substring(time.indexOf(":") + 1, time.lastIndexOf(":")));
+                int sec = Integer.valueOf(time.substring(time.lastIndexOf(":")+1));
+
+                if (hr <0 || min < 0 || sec < 0) return false;
+                if (hr == 0 && min == 0 && sec == 0) return false;
+
+                //If the time passes the above checks then it's valid
+                return true;
+            } catch (NumberFormatException e) {//If the user has input anything other than a number
+                return false;
+            }
         }
     }
 
