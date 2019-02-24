@@ -110,10 +110,11 @@ class GammaTimer
             int min = Integer.valueOf(time.substring(time.indexOf(":") + 1, time.lastIndexOf(":")));
             int sec = Integer.valueOf(time.substring(time.lastIndexOf(":")+1));
             
-            if (hr > 0 && min > 0 && sec > 0)
-                return true;
-            else
-                return false;
+            if (hr <0 || min < 0 || sec < 0) return false;
+            if (hr == 0 && min == 0 && sec == 0) return false;
+            
+            //If the time passes the above checks then it's valid
+            return true;
         }
     }
 
