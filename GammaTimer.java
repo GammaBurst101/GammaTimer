@@ -4,6 +4,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import javax.sound.sampled.*;
+import java.io.InputStream;
+import java.io.BufferedInputStream;
 
 class GammaTimer
 {
@@ -81,7 +83,12 @@ class GammaTimer
     private void ringAlarm()
     {
         try{
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("sounds\\alarm.wav").getAbsoluteFile());
+            //The following code is taken from stack overflow
+            //Playing audio in a jar requires getResourceAsStream() and this method requires any other stream with a special 
+            //ability (I forgot what it's called). Therefore, we use InputStream and then BufferedInputStream(for the ability)
+            InputStream audioSrc = getClass().getResourceAsStream("sounds/alarm.wav");
+            InputStream bufferedIn = new BufferedInputStream(audioSrc);
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(bufferedIn);
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.loop(Clip.LOOP_CONTINUOUSLY);
